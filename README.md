@@ -68,6 +68,8 @@ These calculations were used to generate the required loan portfolio metrics and
 # Dashboard 1 (Summary)
 The Summary Dashboard provides an executive-level overview of the bank's loan portfolio.
 
+<img width="1482" height="815" alt="Summary" src="https://github.com/user-attachments/assets/d4f9565b-9c84-4a7c-ae71-d0e4a850b501" />
+
 ### Key Performance Indicators
 
 The dashboard includes: 
@@ -103,8 +105,9 @@ The grid provides: Total Loan Applications, Total Funded Amount, Total Amount Re
 This allows users to compare the performance and characteristics of loans across different statuses.
 
 # Dashboard 2 (Overview)
-
 The Overview Dashboard provides a broader view of lending trends, geographical activity and borrower characteristics.
+
+<img width="1486" height="807" alt="Overview" src="https://github.com/user-attachments/assets/abe70550-c721-41ff-9c6b-8b0492648b00" />
 
 ### Monthly Lending Trends
 
@@ -124,8 +127,9 @@ Home Ownership Analysis: A Treemap analyses lending activity based on home owner
 The Overview Dashboard uses: Total Loan Applications, Total Funded Amount, Total Amount Received
 
 # Dashboard 3 (Details)
-
 The Details Dashboard provides a consolidated view of the underlying loan information. Its primary objective is to provide users with a comprehensive and user-friendly interface for accessing detailed information about the loan portfolio, borrowers and loan performance. The dashboard acts as a detailed reference point where users can examine individual records and gain a deeper understanding of the portfolio beyond the high-level KPIs.
+
+<img width="1482" height="832" alt="Details" src="https://github.com/user-attachments/assets/099a1bee-088a-448b-bb7d-8ad22529dc3b" />
 
 # Visualisation & Dashboard Development
 
