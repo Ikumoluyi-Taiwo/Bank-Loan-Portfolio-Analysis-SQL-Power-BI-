@@ -1,0 +1,143 @@
+USE BankLoanDB
+
+SELECT * FROM bank_loan_analysis
+
+--Total Loan application
+SELECT COUNT(id) AS Total_Loan_Applications
+FROM bank_loan_analysis
+
+--Total Funded Amount
+SELECT SUM(loan_amount) AS Total_Funded_Amount
+FROM bank_loan_analysis
+
+--Total Amount Received
+SELECT SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+
+--Average Interest Rate
+SELECT ROUND(AVG(int_rate) *100,2) AS Avg_Interest_Rate
+FROM bank_loan_analysis
+
+--Debt to Income Ratio (DTI)
+SELECT ROUND(AVG(dti) * 100,2) AS Averge_DTI
+FROM bank_loan_analysis
+
+--Good Loan Application Percentage
+SELECT 
+	(COUNT(CASE WHEN loan_status = 'Current' OR loan_status = 'Fully Paid' THEN id END) * 100) / 
+	COUNT(id) AS Good_Loan_Percentage
+FROM bank_loan_analysis
+
+--Count of Good Loan Applications
+SELECT COUNT(id) AS Good_Loan_Applications
+FROM bank_loan_analysis
+WHERE loan_status = 'Current' OR loan_status = 'Fully Paid'
+
+--Total Good Loan Funded Amount
+SELECT SUM(loan_amount) AS Good_Loan_Funded_Amount
+FROM bank_loan_analysis
+WHERE loan_status = 'Current' OR loan_status = 'Fully Paid'
+
+--Good Loan Total Received Amount
+SELECT SUM(total_payment) AS Good_Loan_Total_Received
+FROM bank_loan_analysis
+WHERE loan_status = 'Current' OR loan_status = 'Fully Paid'
+
+--Bad Loan Application Percentage
+SELECT (COUNT(CASE WHEN loan_status = 'Charged Off' THEN id END)) * 100 /
+		COUNT(id) AS Bad_Loan_App_Percentage
+FROM bank_loan_analysis
+
+--Count of Bad Loan Applications
+SELECT COUNT(id) AS Bad_Loan_Applications
+FROM bank_loan_analysis
+WHERE loan_status = 'Charged Off'
+
+--Bad Loan Funded Amount
+SELECT SUM(loan_amount) AS Bad_Loan_Funded_Amount
+FROM bank_loan_analysis
+WHERE loan_status = 'Charged Off'
+
+--Bad Loan Total Received Amount
+SELECT SUM(total_payment) AS Bad_Loan_Total_Received
+FROM bank_loan_analysis
+WHERE loan_status = 'Charged Off'
+
+--Loan Status Grid View
+SELECT  loan_status AS Loan_Status,
+		COUNT(id) AS Total_Loan_Count,
+		SUM(loan_amount) AS Total_Funded_Amount,
+		SUM(total_payment) AS Total_Amount_Received,
+		AVG(int_rate) * 100 AS Average_Int_Rate,
+		AVG(dti) * 100 AS Average_DTI
+FROM bank_loan_analysis
+GROUP BY loan_status
+
+--MTD Funded Amount and MTD Amount Received
+SELECT  loan_status AS Loan_Status,
+		SUM(loan_amount) AS MTD_Funded_Amount,
+		SUM(total_payment) AS MTD_Amount_Received
+FROM bank_loan_analysis
+WHERE MONTH(issue_date) = 11 AND YEAR(issue_date) = 2021
+GROUP BY loan_status
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received by Month 
+SELECT 
+	MONTH(issue_date) AS Month_No,
+	DATENAME(MONTH,issue_date) AS Month_Name,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+GROUP BY MONTH(issue_date), DATENAME(MONTH,issue_date)
+ORDER BY MONTH(issue_date) ASC
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received by State 
+SELECT 
+	address_state AS State,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+GROUP BY address_state
+ORDER BY SUM(loan_amount) DESC
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received Across Term Lengths
+SELECT 
+	term AS Term_Length,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+GROUP BY term
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received By Employee Length
+SELECT 
+	emp_length AS Employee_Length,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+GROUP BY emp_length
+ORDER BY COUNT(id) DESC
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received By Loan Purpose
+SELECT 
+	purpose AS Loan_Purpose,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+GROUP BY purpose
+ORDER BY COUNT(id) DESC
+
+--Total Loan Applications, Total Funded Amount and Total Amount Received By Home Ownership
+SELECT 
+	home_ownership AS Home_Ownership,
+	COUNT(id) AS Count_Of_Loan_Application,
+	SUM(loan_amount) AS Total_Funded_Amount,
+	SUM(total_payment) AS Total_Amount_Received
+FROM bank_loan_analysis
+--WHERE address_state = 'CA' AND grade = 'B'
+GROUP BY home_ownership
+ORDER BY COUNT(id) DESC
